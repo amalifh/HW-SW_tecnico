@@ -1,9 +1,10 @@
-#define N 1024
+#define N_max 1024
 #define B_BLOCK 4
 
 void axil_mat_mul_cols(
-    float A_row[N],
-    float B_cols[B_BLOCK][N],
+    int N,
+    float A_row[N_max],
+    float B_cols[B_BLOCK][N_max],
     float C_out[B_BLOCK]
 )
 {
