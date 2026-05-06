@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 16
+#define N 1024
 #define SIZE (N * N)
 #define B_BLOCK 4
 #define EPSILON 0.0001f
