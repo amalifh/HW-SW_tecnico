@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "xparameters.h"
-#include "xaxil_mat_mul_fp.h"
+#include "xaxil_opt_mat_mul_fp.h"
 #include "xiltimer.h"
 
 #define N 16
@@ -69,17 +69,17 @@ void SW_matrix_multiply()
 
 int HW_matrix_multiply()
 {
-    XAxil_mat_mul_fp Instance;
-    XAxil_mat_mul_fp_Config *ConfigPtr;
+    XAxil_opt_mat_mul_fp Instance;
+    XAxil_opt_mat_mul_fp_Config *ConfigPtr;
     int status;
 
-    ConfigPtr = XAxil_mat_mul_fp_LookupConfig(XPAR_XAXIL_MAT_MUL_FP_0_BASEADDR);
+    ConfigPtr = XAxil_opt_mat_mul_fp_LookupConfig(XPAR_XAXIL_OPT_MAT_MUL_FP_0_BASEADDR);
     if (ConfigPtr == NULL) {
         printf("LookupConfig failed\n");
         return XST_FAILURE;
     }
 
-    status = XAxil_mat_mul_fp_CfgInitialize(&Instance, ConfigPtr);
+    status = XAxil_opt_mat_mul_fp_CfgInitialize(&Instance, ConfigPtr);
     if (status != XST_SUCCESS) {
         printf("CfgInitialize failed\n");
         return XST_FAILURE;
@@ -90,14 +90,14 @@ int HW_matrix_multiply()
         B_words[i] = float_to_u32(B[i]);
     }
 
-    XAxil_mat_mul_fp_Write_A_Words(&Instance, 0, A_words, SIZE);
-    XAxil_mat_mul_fp_Write_B_Words(&Instance, 0, B_words, SIZE);
+    XAxil_opt_mat_mul_fp_Write_A_row_Words(&Instance, 0, A_words, SIZE);
+    XAxil_opt_mat_mul_fp_Write_B_cols_Words(&Instance, 0, B_words, SIZE);
 
-    XAxil_mat_mul_fp_Start(&Instance);
+    XAxil_opt_mat_mul_fp_Start(&Instance);
 
-    while (!XAxil_mat_mul_fp_IsDone(&Instance));
+    while (!XAxil_opt_mat_mul_fp_IsDone(&Instance));
 
-    XAxil_mat_mul_fp_Read_C_Words(&Instance, 0, C_words, SIZE);
+    XAxil_opt_mat_mul_fp_Read_C_vals_Words(&Instance, 0, C_words, SIZE);
 
     for (int i = 0; i < SIZE; i++) {
         C_hw[i] = u32_to_float(C_words[i]);
