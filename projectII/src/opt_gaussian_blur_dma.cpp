@@ -6,7 +6,7 @@
 #define HEIGHT 256
 #define SIZE   (WIDTH * HEIGHT)
 
-typedef ap_axis<32,0,0,0> axis_t;
+typedef ap_axis<8,0,0,0> axis_t;
 typedef ap_uint<8> pixel_t;
 
 static axis_t make_axis_word(pixel_t pix, bool last) {
