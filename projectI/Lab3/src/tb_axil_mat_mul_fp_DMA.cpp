@@ -4,9 +4,9 @@
 #include <hls_stream.h>
 #include <ap_axi_sdata.h>
 
-#define N 256
+#define N 64
 #define SIZE (N * N)
-#define COL_BLOCK 4
+#define COL_BLOCK 32
 #define EPSILON 0.0001f
 
 typedef ap_axis<32, 0, 0, 0> axis_t;

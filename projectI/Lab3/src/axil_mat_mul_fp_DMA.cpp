@@ -1,8 +1,8 @@
 #include <hls_stream.h>
 #include <ap_axi_sdata.h>
 
-#define N 256
-#define COL_BLOCK 4
+#define N 64
+#define COL_BLOCK 32
 
 typedef ap_axis<32, 0, 0, 0> axis_t;
 
