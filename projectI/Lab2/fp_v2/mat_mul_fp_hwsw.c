@@ -6,7 +6,7 @@
 #include "xaxil_opt_mat_mul_fp.h"
 #include "xiltimer.h"
 
-#define N 16
+#define N 64
 #define SIZE (N * N)
 #define EPSILON 0.0001f
 

@@ -1,4 +1,4 @@
-#define N 1024
+#define N 64
 #define COL_BLOCK 2
 
 void axil_opt_mat_mul_fp(float B_cols[N * COL_BLOCK],
@@ -14,7 +14,7 @@ void axil_opt_mat_mul_fp(float B_cols[N * COL_BLOCK],
 
     static float B_buf[N][COL_BLOCK];
 
-#pragma HLS BIND_STORAGE variable=B_buf type=ram_2p impl=bram
+#pragma HLS RESOURCE variable=B_buf core=RAM_2P_BRAM
 
     if (mode == 0) {
         // Load COL_BLOCK columns of B into internal BRAM

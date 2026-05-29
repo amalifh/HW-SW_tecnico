@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 1024
+#define N 64
 #define COL_BLOCK 2
 #define EPSILON 0.001f
 
