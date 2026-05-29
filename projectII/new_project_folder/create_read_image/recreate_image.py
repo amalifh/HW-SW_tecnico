@@ -1,16 +1,22 @@
 from PIL import Image
 import numpy as np
 
-WIDTH = 1280
-HEIGHT = 720
+WIDTH = 512
+HEIGHT = 512
 
-arr32 = np.fromfile("output.bin", dtype=np.uint32)
+input_bin = "output.bin"
+output_image = "output.png"
 
-if arr32.size != WIDTH * HEIGHT:
-    raise ValueError(f"Expected {WIDTH * HEIGHT} words, got {arr32.size}")
+arr = np.fromfile(input_bin, dtype=np.uint8)
 
-arr8 = (arr32 & 0xFF).astype(np.uint8)
-arr8 = arr8.reshape((HEIGHT, WIDTH))
+expected_size = WIDTH * HEIGHT
 
-Image.fromarray(arr8, mode="L").save("fpga_output.png")
-print("Saved fpga_output.png")
+if arr.size != expected_size:
+    raise ValueError(f"Expected {expected_size} bytes, got {arr.size}")
+
+arr = arr.reshape((HEIGHT, WIDTH))
+
+img = Image.fromarray(arr, mode="L")
+img.save(output_image)
+
+print(f"Saved {output_image}")

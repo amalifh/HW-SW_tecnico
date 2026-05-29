@@ -1,15 +1,20 @@
 from PIL import Image
 import numpy as np
 
-WIDTH = 1280
-HEIGHT = 720
+WIDTH = 512
+HEIGHT = 512
 
-img = Image.open("tiger_grayscale_resized.png").convert("L").resize((WIDTH, HEIGHT))
-img.save("input_gray.png")
+input_image = "einstein.png"
+output_bin = "input.bin"
 
-arr8 = np.array(img, dtype=np.uint8).flatten(order="C")
+img = Image.open(input_image).convert("L")
+img = img.resize((WIDTH, HEIGHT))
 
-arr8.tofile("input.bin")
+arr = np.array(img, dtype=np.uint8)
 
-print("input.bin written as uint8 pixels")
-print("File size should be:", WIDTH * HEIGHT, "bytes")
+# Row-major uint8 binary
+arr.tofile(output_bin)
+
+print(f"Saved {output_bin}")
+print(f"Shape: {arr.shape}")
+print(f"Bytes: {arr.nbytes}")
