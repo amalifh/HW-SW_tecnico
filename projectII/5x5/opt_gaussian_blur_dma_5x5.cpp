@@ -4,8 +4,8 @@
 
 // ─── Image dimensions ────────────────────────────────────────────────────────
 // Keep power-of-2 width for efficient address arithmetic (professor's tip)
-#define WIDTH  1280
-#define HEIGHT 720
+#define WIDTH  512
+#define HEIGHT 512
 #define SIZE   (WIDTH * HEIGHT)
 
 // ─── Kernel size ─────────────────────────────────────────────────────────────

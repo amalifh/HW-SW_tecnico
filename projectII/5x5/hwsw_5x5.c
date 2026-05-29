@@ -6,8 +6,8 @@
 #include "xiltimer.h"
 #include "xgaussian_blur_dma.h"
 
-#define WIDTH  1280
-#define HEIGHT 720
+#define WIDTH  512
+#define HEIGHT 512
 #define SIZE   (WIDTH * HEIGHT)
 
 // 8-bit image: 1 byte per pixel — unchanged from 3x3 version

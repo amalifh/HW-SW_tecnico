@@ -4,8 +4,8 @@
 #include <ap_axi_sdata.h>
 #include <ap_int.h>
 
-#define WIDTH  1280
-#define HEIGHT 720
+#define WIDTH  512
+#define HEIGHT 512
 #define SIZE   (WIDTH * HEIGHT)
 
 #define KSIZE  5
