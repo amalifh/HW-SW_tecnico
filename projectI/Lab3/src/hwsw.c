@@ -11,7 +11,7 @@
 
 #include "xaxis_mat_mul_fp_dma.h"
 
-#define N 256
+#define N 512
 #define SIZE (N * N)
 #define COL_BLOCK 32
 #define EPSILON 0.0001f

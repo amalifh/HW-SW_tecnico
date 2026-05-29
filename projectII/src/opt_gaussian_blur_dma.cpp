@@ -57,7 +57,7 @@ void gaussian_blur_dma(hls::stream<axis_t>& in_stream,
             linebuf0[c] = mid_pixel;
             linebuf1[c] = new_pixel;
 
-            // Shift window left
+            // Shift window, update pixels, P00, P01, P02, P10, P11, P12, P20, P21, P22
             w00 = w01; w01 = w02; w02 = top_pixel;
             w10 = w11; w11 = w12; w12 = mid_pixel;
             w20 = w21; w21 = w22; w22 = new_pixel;

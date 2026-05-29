@@ -4,7 +4,7 @@
 #include <hls_stream.h>
 #include <ap_axi_sdata.h>
 
-#define N 64
+#define N 512
 #define SIZE (N * N)
 #define COL_BLOCK 32
 #define EPSILON 0.0001f

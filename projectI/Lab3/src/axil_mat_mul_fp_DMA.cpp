@@ -1,7 +1,7 @@
 #include <hls_stream.h>
 #include <ap_axi_sdata.h>
 
-#define N 64
+#define N 512
 #define COL_BLOCK 32
 
 typedef ap_axis<32, 0, 0, 0> axis_t;
@@ -65,7 +65,7 @@ void axis_mat_mul_fp_DMA(
         }
 
         for (int k = 0; k < N; k++) {
-#pragma HLS PIPELINE II=4
+#pragma HLS PIPELINE II=2
             axis_t word = in_stream.read();
             float a_val = axis_to_float(word);
 
