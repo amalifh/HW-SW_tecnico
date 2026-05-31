@@ -14,6 +14,7 @@
 #define HALO   (KSIZE - 1)   // = 4
 #define NBUF   (KSIZE - 1)   // = 4 line buffers
 
+
 // 5×5 Gaussian — outer product of [1,4,6,4,1] with itself.
 // Sum = 256 = 2^8  →  normalise with >> 8.
 static const ap_uint<6> KERNEL[KSIZE][KSIZE] = {
@@ -34,6 +35,10 @@ typedef ap_axis<AXI_WIDTH,0,0,0> axis_t;
 typedef ap_uint<8>                pixel_t;
 typedef ap_uint<AXI_WIDTH>        word_t;
 
+
+static_assert(WIDTH % PIXELS_PER_WORD == 0,
+    "WIDTH must be a multiple of PIXELS_PER_WORD (8) for 64-bit AXI packing");
+    
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 // Unpack byte p (0=LSB side) from a 64-bit word.
 static pixel_t unpack_pixel(word_t word, int p) {

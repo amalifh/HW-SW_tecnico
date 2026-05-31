@@ -13,12 +13,16 @@
 #define PIXELS_PER_WORD 8
 #define AXI_WIDTH       64
 
+static_assert(WIDTH % PIXELS_PER_WORD == 0,
+    "WIDTH must be a multiple of PIXELS_PER_WORD (8) for 64-bit AXI packing");
+
 typedef ap_axis<AXI_WIDTH,0,0,0> axis_t;
 typedef ap_uint<8>                pixel_t;
 typedef ap_uint<AXI_WIDTH>        word_t;
 
 void gaussian_blur_dma(hls::stream<axis_t>& in_stream,
                        hls::stream<axis_t>& out_stream);
+                       
 
 // ── Kernel (must match HLS core) ─────────────────────────────────────────────
 static const int KERNEL[KSIZE][KSIZE] = {
