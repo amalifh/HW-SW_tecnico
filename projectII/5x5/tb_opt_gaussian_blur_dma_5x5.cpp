@@ -97,7 +97,7 @@ int main() {
     hls::stream<axis_t> in_stream;
     hls::stream<axis_t> out_stream;
 
-    // Allocate on heap — stack is too small for 720p arrays
+    // Allocate on heap
     static pixel_t input [HEIGHT][WIDTH];
     static pixel_t sw_out[HEIGHT][WIDTH];
     static pixel_t hw_out[HEIGHT][WIDTH];

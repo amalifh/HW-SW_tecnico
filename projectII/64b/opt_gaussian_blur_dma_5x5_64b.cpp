@@ -73,6 +73,9 @@ void gaussian_blur_dma(hls::stream<axis_t>& in_stream,
     // Partitioned CYCLIC by PIXELS_PER_WORD along the column dimension.
     // This gives 8 independent BRAM banks per row so all 8 pixels in one
     // 64-bit word can be read/written in the same cycle without bank conflict.
+    // BRAM partitioning: linebuf gets a second partition pragma — cyclic factor=8 on dim 2 (columns).
+    // This splits each of the 4 row-buffers into 8 independent BRAM banks.
+    // Pixel p always hits bank p % 8, so all 8 pixels in one word land on different banks — no port conflict, the whole unrolled pixel loop resolves without stalling.
     static pixel_t linebuf[NBUF][WIDTH];
 #pragma HLS ARRAY_PARTITION variable=linebuf complete    dim=1   // all 4 rows independent
 #pragma HLS ARRAY_PARTITION variable=linebuf cyclic      dim=2 factor=8  // 8 column banks
