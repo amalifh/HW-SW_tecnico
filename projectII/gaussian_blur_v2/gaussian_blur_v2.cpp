@@ -29,7 +29,7 @@ typedef ap_uint<8> pixel_t;
 //   4 16 24 16  4
 //   1  4  6  4  1
 // ─────────────────────────────────────────────────────────────────────────────
-static const ap_uint<9> KERNEL[KSIZE][KSIZE] = {
+static const ap_uint<8> KERNEL[KSIZE][KSIZE] = {
     { 1,  4,  6,  4,  1},
     { 4, 16, 24, 16,  4},
     { 6, 24, 36, 24,  6},
@@ -59,7 +59,7 @@ inline ap_uint<64> pack_pixel(ap_uint<64> word, int idx, pixel_t pix) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Main HLS Gaussian Blur IP: 5x5 kernel, 64-bit AXI stream I/O
 // ─────────────────────────────────────────────────────────────────────────────
-void gaussian_blur_dma_5x5(hls::stream<axis_wide_t>& in_stream,
+void gaussian_blur_v2(hls::stream<axis_wide_t>& in_stream,
                             hls::stream<axis_wide_t>& out_stream) {
 
 #pragma HLS INTERFACE axis port=in_stream

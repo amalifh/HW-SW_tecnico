@@ -23,7 +23,7 @@ typedef ap_uint<8> pixel_t;
 // ─────────────────────────────────────────────────────────────────────────────
 // HLS function declaration
 // ─────────────────────────────────────────────────────────────────────────────
-void gaussian_blur_dma_5x5(hls::stream<axis_wide_t>& in_stream,
+void gaussian_blur_v2(hls::stream<axis_wide_t>& in_stream,
                             hls::stream<axis_wide_t>& out_stream);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -62,7 +62,7 @@ static pixel_t extract_pixel(ap_uint<64> word, int idx) {
 // ─────────────────────────────────────────────────────────────────────────────
 // 5x5 Gaussian kernel: outer product of [1,4,6,4,1]
 // ─────────────────────────────────────────────────────────────────────────────
-static const ap_uint<9> KERNEL[KSIZE][KSIZE] = {
+static const ap_uint<8> KERNEL[KSIZE][KSIZE] = {
     { 1,  4,  6,  4,  1},
     { 4, 16, 24, 16,  4},
     { 6, 24, 36, 24,  6},
@@ -208,7 +208,7 @@ int main() {
                 p[i] = input[r][c + i];
             }
 
-            bool is_last = (r == HEIGHT - 1 && c == WIDTH - 9);
+            bool is_last = (r == HEIGHT - 1 && c == WIDTH - 8);
             in_stream.write(make_input_word(p[0], p[1], p[2], p[3],
                                              p[4], p[5], p[6], p[7],
                                              is_last));
@@ -219,7 +219,7 @@ int main() {
     // Call HLS function
     // ─────────────────────────────────────────────────────────────────────────
     std::cout << "Running HLS Gaussian blur accelerator...\n";
-    gaussian_blur_dma_5x5(in_stream, out_stream);
+    gaussian_blur_v2(in_stream, out_stream);
 
     // ─────────────────────────────────────────────────────────────────────────
     // Read output stream and compare with software reference
@@ -252,7 +252,7 @@ int main() {
                 }
             }
 
-            bool expected_last = (r == HEIGHT - 1 && c == WIDTH - 9);
+            bool expected_last = (r == HEIGHT - 1 && c == WIDTH - 8);
             if ((bool)out_word.last != expected_last) {
                 if (tlast_errors < 5) {
                     std::cout << "TLAST error at (" << r << "," << c << "): expected "

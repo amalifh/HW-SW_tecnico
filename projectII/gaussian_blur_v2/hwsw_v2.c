@@ -4,7 +4,7 @@
 #include "xil_cache.h"
 #include "xaxidma.h"
 #include "xiltimer.h"
-#include "xgaussian_blur_dma.h"
+#include "xgaussian_blur_v2.h"
 
 #define WIDTH  512
 #define HEIGHT 512
@@ -14,7 +14,7 @@
 #define TRANSFER_BYTES SIZE
 
 // ── Kernel parameters ────────────────────────────────────────────────────────
-// Must match opt_gaussian_blur_dma_5x5.cpp exactly.
+// Must match gaussian_blur_v2.cpp exactly.
 #define KSIZE  5
 #define HALO   (KSIZE - 1)   // = 4: rows/cols before valid output
 #define NBUF   (KSIZE - 1)   // = 4 line buffers
@@ -43,7 +43,7 @@ static const unsigned int KERNEL[KSIZE][KSIZE] = {
 #define PRINT_IMAGE_HEX 0
 
 static XAxiDma AxiDma;
-static XGaussian_blur_dma GaussianIP;
+static XGaussian_blur_v2 GaussianIP;
 
 static u8 *input_pixels  = (u8 *)INPUT_ADDR;
 static u8 *output_pixels = (u8 *)OUTPUT_ADDR;
@@ -79,8 +79,8 @@ static int init_gaussian_ip()
 {
     int status;
 
-    status = XGaussian_blur_dma_Initialize(&GaussianIP,
-                                           XPAR_XGAUSSIAN_BLUR_DMA_0_BASEADDR);
+    status = XGaussian_blur_v2_Initialize(&GaussianIP,
+                                           XPAR_XGAUSSIAN_BLUR_V2_0_BASEADDR);
 
     if (status != XST_SUCCESS) {
         xil_printf("ERROR: Gaussian IP init failed\r\n");
@@ -184,7 +184,7 @@ static int run_hw()
         return XST_FAILURE;
     }
 
-    XGaussian_blur_dma_Start(&GaussianIP);
+    XGaussian_blur_v2_Start(&GaussianIP);
 
     while (XAxiDma_Busy(&AxiDma, XAXIDMA_DMA_TO_DEVICE));
     while (XAxiDma_Busy(&AxiDma, XAXIDMA_DEVICE_TO_DMA));
@@ -238,7 +238,7 @@ int main()
     u64 cycles;
     u64 time_us;
 
-    xil_printf("\r\nGaussian Blur DMA Test - 5x5 kernel, 8-bit AXI Stream\r\n");
+    xil_printf("\r\nGaussian Blur DMA Test - gaussian_blur_v2 (5x5 kernel, 8-bit AXI Stream)\r\n");
     xil_printf("Image size: %dx%d\r\n", WIDTH, HEIGHT);
     xil_printf("Kernel: %dx%d (sum=256, normalise >>8)\r\n", KSIZE, KSIZE);
     xil_printf("Transfer size: %d bytes each direction\r\n", TRANSFER_BYTES);
