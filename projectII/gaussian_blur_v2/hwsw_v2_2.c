@@ -30,13 +30,13 @@
  *   which packs 8 pixels per 64-bit AXI-stream word.
  *
  * Requirements checklist ────────────────────────────────────────────────────
- *   [✓] 512×512 base-2 image
- *   [✓] 5×5 Gaussian kernel (KSIZE configurable via #define)
- *   [✓] Kernel weights: outer product of [1,4,6,4,1], normalised >> 8
- *   [✓] 64-bit AXI stream → 8 pixels per DMA word (HLS IP side)
- *   [✓] SW reference mirrors HLS streaming algorithm exactly
- *   [✓] Configurable window: change KSIZE, HALO, NBUF and kernel table
- *   [✓] Speedup ratio printed at end
+ *   [x] 512×512 base-2 image
+ *   [x] 5×5 Gaussian kernel (KSIZE configurable via #define)
+ *   [x] Kernel weights: outer product of [1,4,6,4,1], normalised >> 8
+ *   [x] 64-bit AXI stream → 8 pixels per DMA word (HLS IP side)
+ *   [x] SW reference mirrors HLS streaming algorithm exactly
+ *   [x] Configurable window: change KSIZE, HALO, NBUF and kernel table
+ *   [x] Speedup ratio printed at end
  */
 
 #include <stdio.h>
@@ -44,9 +44,7 @@
 #include "xil_printf.h"
 #include "xil_cache.h"
 #include "xaxidma.h"
-/* FIX: xiltimer.h does not define COUNTS_PER_SECOND on bare-metal Zynq.
- *      xtime_l.h defines both XTime_GetTime() and COUNTS_PER_SECOND.      */
-#include "xtime_l.h"
+#include "xiltimer.h"
 #include "xgaussian_blur_v2.h"
 
 /* ── Image / transfer dimensions ─────────────────────────────────────────── */
