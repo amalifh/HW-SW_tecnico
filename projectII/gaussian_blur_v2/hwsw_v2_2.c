@@ -64,12 +64,7 @@
 /* ── 5×5 Gaussian kernel ──────────────────────────────────────────────────
  *   Outer product of [1,4,6,4,1] with itself.
  *   Sum = 256 = 2^8  →  normalise with >> 8.
- *
- *    1   4   6   4   1
- *    4  16  24  16   4
- *    6  24  36  24   6
- *    4  16  24  16   4
- *    1   4   6   4   1                                                       */
+                                                      */
 static const unsigned int KERNEL[KSIZE][KSIZE] = {
     { 1,  4,  6,  4,  1},
     { 4, 16, 24, 16,  4},
@@ -105,7 +100,6 @@ static u8 *output_pixels = (u8 *)OUTPUT_ADDR;
 static u8 sw_output[SIZE];
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * init_dma
  *   Initialise the AXI DMA in simple (non-SG) mode.
  *   DMA base: 0x41E00000  (XPAR_XAXIDMA_0_BASEADDR, device ID 0)
  * ═══════════════════════════════════════════════════════════════════════════ */
@@ -135,7 +129,6 @@ static int init_dma(void)
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * init_gaussian_ip
  *   Initialise the gaussian_blur_v2 HLS IP.
  *   IP base: 0x40000000  (XPAR_XGAUSSIAN_BLUR_V2_0_BASEADDR)
  * ═══════════════════════════════════════════════════════════════════════════ */
